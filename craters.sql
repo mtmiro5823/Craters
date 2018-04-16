@@ -7,3 +7,5 @@ CREATE TABLE observation (id uuid PRIMARY KEY, data json);
 CREATE TABLE source (id uuid PRIMARY KEY, url varchar);
 CREATE TABLE source_map (id uuid PRIMARY KEY,obs_id uuid REFERENCES observation, source_id uuid REFERENCES source);
 CREATE TABLE spatial_data (id uuid PRIMARY KEY, obs_id uuid REFERENCES observation, geom geometry, srid integer REFERENCES spatial_ref_sys);
+ALTER TABLE spatial_ref_sys DROP CONSTRAINT spatial_ref_sys_srid_check;
+ALTER TABLE spatial_ref_sys ADD CONSTRAINT spatial_ref_sys_srid_check CHECK(srid > 0);
